@@ -18,7 +18,7 @@ See variables documentation: https://learning.postman.com/docs/sending-requests/
 This collection uses these (opinionated) variables:
 
 | Variable Name  | Example value        | Note |
-| ------------- | ------------- | -------- }
+| ------------- | ------------- | -------- |
 | furl  | http://localhost:8764  | leave trailing slash off for better readability in the postman request line |
 | app  |  application name |  |
 | coll  | collection name  |  |
