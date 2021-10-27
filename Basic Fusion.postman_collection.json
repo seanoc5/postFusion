@@ -1,0 +1,1866 @@
+{
+	"info": {
+		"_postman_id": "f6feb9b4-f180-4412-bcc6-4d77ca0f43a6",
+		"name": "Basic Fusion",
+		"description": "General Fusion calls for reference",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "General & Debug",
+			"item": [
+				{
+					"name": "Get solr admin info -- zk connect string etc",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/solrAdmin/default/admin/info/system",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"solrAdmin",
+								"default",
+								"admin",
+								"info",
+								"system"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "query logged in",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"numfound matches expected count\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.response.numFound).to.eql(6057174);",
+									"",
+									"});",
+									"",
+									"pm.test(\"returned docs contains expected id\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var docs = jsonData.response.docs;",
+									"    var doc1 = docs[0];",
+									"    console.log(\"Doc1: \" + doc1);",
+									"    // pm.expect(jsonData).to.have.deep.property('response.docs.type_s', 'channel');",
+									"    pm.expect(jsonData.response.docs).to.be.an('array');",
+									"    //.that.contains.something.like({id: 'https://lucidworks.slack.com/archives/general/p1435599620000629'});",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/query-pipelines/{{qryp}}/collections/{{coll}}/select?q=*:*",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"query-pipelines",
+								"{{qryp}}",
+								"collections",
+								"{{coll}}",
+								"select"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "*:*"
+								}
+							]
+						},
+						"description": "test being logged in"
+					},
+					"response": []
+				},
+				{
+					"name": "Basic Query",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/apollo/apps/{{app}}/query-pipelines/{{qryp}}/collections/{{coll}}/select?echoParams=all&wt=json&json.nl=arrarr&sort&start=0&q=test&debug=true&rows=10",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apollo",
+								"apps",
+								"{{app}}",
+								"query-pipelines",
+								"{{qryp}}",
+								"collections",
+								"{{coll}}",
+								"select"
+							],
+							"query": [
+								{
+									"key": "echoParams",
+									"value": "all"
+								},
+								{
+									"key": "wt",
+									"value": "json"
+								},
+								{
+									"key": "json.nl",
+									"value": "arrarr"
+								},
+								{
+									"key": "sort",
+									"value": null
+								},
+								{
+									"key": "start",
+									"value": "0"
+								},
+								{
+									"key": "q",
+									"value": "test"
+								},
+								{
+									"key": "debug",
+									"value": "true"
+								},
+								{
+									"key": "rows",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Just a simple query of collection lucy"
+					},
+					"response": []
+				},
+				{
+					"name": "Simple API call",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Simple API introspect",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/introspect",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"introspect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query system logs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/apollo/apps/{{app}}/query-pipelines/system-logs-browser/collections/system_logs/select?echoParams=all&wt=json&q=zzz",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apollo",
+								"apps",
+								"{{app}}",
+								"query-pipelines",
+								"system-logs-browser",
+								"collections",
+								"system_logs",
+								"select"
+							],
+							"query": [
+								{
+									"key": "echoParams",
+									"value": "all"
+								},
+								{
+									"key": "wt",
+									"value": "json"
+								},
+								{
+									"key": "q",
+									"value": "zzz"
+								}
+							]
+						},
+						"description": "look for logs entries "
+					},
+					"response": []
+				},
+				{
+					"name": "Get solr cluster api/collections info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/collections",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"collections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Luke solr api request {{coll}}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"numfound matches expected count\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.response.numFound).to.be.gt(1);",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/solr/{{coll}}/admin/luke",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"solr",
+								"{{coll}}",
+								"admin",
+								"luke"
+							],
+							"query": [
+								{
+									"key": "commit",
+									"value": "true",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get {{coll}} solr-configs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{furl}}/api/apollo/collections/{{coll}}/solr-config",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apollo",
+								"collections",
+								"{{coll}}",
+								"solr-config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get {{coll}} solr-config synonym.txt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{furl}}/api/apollo/collections/{{coll}}/solr-config/synonyms.txt?expand=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apollo",
+								"collections",
+								"{{coll}}",
+								"solr-config",
+								"synonyms.txt"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "text/plain",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{furl}}/api/collections/{{coll}}/solr-config/managed-schema?expand=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"collections",
+								"{{coll}}",
+								"solr-config",
+								"managed-schema"
+							],
+							"query": [
+								{
+									"key": "expand",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "things to help general work and debugging"
+		},
+		{
+			"name": "Setup",
+			"item": [
+				{
+					"name": "Get Basic query pipeline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/query-pipelines/sean-test",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"query-pipelines",
+								"sean-test"
+							]
+						},
+						"description": "Create basic query pipeline with hl, phrase, q.alt, mm\n\n{{furl}}/api/apps/{{app}}/query-pipelines/web2021"
+					},
+					"response": []
+				},
+				{
+					"name": "Create sean-test query pipeline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"sean-test\",\n  \"stages\": [\n    {\n      \"type\": \"set-params\",\n      \"id\": \"n0b\",\n      \"params\": [\n        {\n          \"key\": \"pf\",\n          \"value\": \"title^10 body^5 description^10\",\n          \"policy\": \"append\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"phrase boosting\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"n0b\"\n    },\n    {\n      \"type\": \"set-params\",\n      \"id\": \"jjw\",\n      \"params\": [\n        {\n          \"key\": \"q.alt\",\n          \"value\": \"*:*\",\n          \"policy\": \"append\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"q.alt\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"jjw\"\n    },\n    {\n      \"type\": \"set-params\",\n      \"id\": \"bq7\",\n      \"params\": [\n        {\n          \"key\": \"hl\",\n          \"value\": \"on\",\n          \"policy\": \"default\"\n        },\n        {\n          \"key\": \"hl.fl\",\n          \"value\": \"*\",\n          \"policy\": \"default\"\n        },\n        {\n          \"key\": \"hl.snippets\",\n          \"value\": \"3\",\n          \"policy\": \"default\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"hl params\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"bq7\"\n    },\n    {\n      \"type\": \"set-params\",\n      \"id\": \"ag\",\n      \"params\": [\n        {\n          \"key\": \"mm\",\n          \"value\": \"2\",\n          \"policy\": \"default\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"mm params\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"ag\"\n    },\n    {\n      \"type\": \"text-tagger\",\n      \"id\": \"4bed1173-c90b-4b2a-992d-db4df2d697b6\",\n      \"useEmbeddedSolrServer\": false,\n      \"paramToTag\": \"q\",\n      \"spell_corrections_enabled\": true,\n      \"phrase_boosting_enabled\": true,\n      \"tail_rewrites_enabled\": true,\n      \"phraseBoost\": 2.0,\n      \"phraseSlop\": 10,\n      \"synonymExpansionBoost\": 2.0,\n      \"synonym_expansion_enabled\": true,\n      \"overlaps\": \"ALL\",\n      \"params\": [],\n      \"type\": \"text-tagger\",\n      \"skip\": true,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"4bed1173-c90b-4b2a-992d-db4df2d697b6\"\n    },\n    {\n      \"type\": \"recommendation\",\n      \"id\": \"b0b84fd9-89a4-47c3-b1f3-956216dd6561\",\n      \"numRecommendations\": 10,\n      \"numSignals\": 100,\n      \"aggrType\": \"click@doc_id,filters,query\",\n      \"boostId\": \"id\",\n      \"boostingMethod\": \"query-param\",\n      \"boostingParam\": \"boost\",\n      \"queryParams\": [\n        {\n          \"key\": \"qf\",\n          \"value\": \"query_t\"\n        },\n        {\n          \"key\": \"pf\",\n          \"value\": \"query_t^50\"\n        },\n        {\n          \"key\": \"pf\",\n          \"value\": \"query_t~3^20\"\n        },\n        {\n          \"key\": \"pf2\",\n          \"value\": \"query_t^20\"\n        },\n        {\n          \"key\": \"pf2\",\n          \"value\": \"query_t~3^10\"\n        },\n        {\n          \"key\": \"pf3\",\n          \"value\": \"query_t^10\"\n        },\n        {\n          \"key\": \"pf3\",\n          \"value\": \"query_t~3^5\"\n        },\n        {\n          \"key\": \"boost\",\n          \"value\": \"map(query({!field f=query_s v=$q}),0,0,1,20)\"\n        },\n        {\n          \"key\": \"mm\",\n          \"value\": \"50%\"\n        },\n        {\n          \"key\": \"defType\",\n          \"value\": \"edismax\"\n        },\n        {\n          \"key\": \"sort\",\n          \"value\": \"score desc, weight_d desc\"\n        }\n      ],\n      \"rollupField\": \"doc_id_s\",\n      \"rollupWeightField\": \"weight_d\",\n      \"weightExpression\": \"math:log(weight_d + 1) + 10 * math:log(score+1)\",\n      \"rollupWeightStrategy\": \"max\",\n      \"type\": \"recommendation\",\n      \"skip\": true,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"b0b84fd9-89a4-47c3-b1f3-956216dd6561\"\n    },\n    {\n      \"type\": \"search-fields\",\n      \"id\": \"09618459-2b44-4725-9d23-0e0df55c1df9\",\n      \"rows\": 10,\n      \"start\": 0,\n      \"queryFields\": [\n        {\n          \"field\": \"body_wsl\",\n          \"boost\": 2.0\n        },\n        {\n          \"field\": \"title_wsl\",\n          \"boost\": 20.0\n        },\n        {\n          \"field\": \"description_wsl\",\n          \"boost\": 2.0\n        },\n        {\n          \"field\": \"title_t\",\n          \"boost\": 10.0\n        },\n        {\n          \"field\": \"description_t\",\n          \"boost\": 8.0\n        },\n        {\n          \"field\": \"body_t\",\n          \"boost\": 5.0\n        },\n        {\n          \"field\": \"_text_\",\n          \"boost\": 0.01\n        }\n      ],\n      \"returnFields\": [\n        \"*\",\n        \"score\",\n        \"length_l\",\n        \"title\",\n        \"fetchedDate_dt\",\n        \"lastModified_dt\",\n        \"description\"\n      ],\n      \"type\": \"search-fields\",\n      \"skip\": false,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"09618459-2b44-4725-9d23-0e0df55c1df9\"\n    },\n    {\n      \"type\": \"facet\",\n      \"id\": \"0de1cc5e-8db4-43da-b9cb-199645ce5814\",\n      \"fieldFacets\": [\n        {\n          \"field\": \"_lw_data_source_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"mimeType_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"parent_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"_lw_parser_content_type_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"_lw_batch_id_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"_lw_parser_charset_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"urlpart1_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"urlpart2_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        }\n      ],\n      \"type\": \"facet\",\n      \"skip\": false,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"0de1cc5e-8db4-43da-b9cb-199645ce5814\",\n      \"properties\": {\n        \"autoCreated\": true\n      }\n    },\n    {\n      \"type\": \"query-rules\",\n      \"id\": \"5bbeb667-aa21-4cc1-a4bc-d64ef92f27cb\",\n      \"useEmbeddedSolrServer\": false,\n      \"useOriginalQueryIfNoRulesMatch\": true,\n      \"matchPartialFilterQueries\": true,\n      \"handler\": \"select\",\n      \"method\": \"POST\",\n      \"ruleLimit\": \"100\",\n      \"params\": [],\n      \"hierarchicalFilter\": [],\n      \"headers\": [],\n      \"type\": \"query-rules\",\n      \"skip\": true,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"5bbeb667-aa21-4cc1-a4bc-d64ef92f27cb\"\n    },\n    {\n      \"type\": \"solr-query\",\n      \"id\": \"e0538d56-b374-4255-b34c-cfe0ae0d9380\",\n      \"httpMethod\": \"POST\",\n      \"allowFederatedSearch\": false,\n      \"type\": \"solr-query\",\n      \"skip\": false,\n      \"responseSignalsEnabled\": true,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"e0538d56-b374-4255-b34c-cfe0ae0d9380\"\n    },\n    {\n      \"type\": \"query-rules-augment-response\",\n      \"id\": \"fc5afc32-2149-4036-b4b5-54044b4c2385\",\n      \"facetLabelParseDelimiter\": \"||\",\n      \"type\": \"query-rules-augment-response\",\n      \"skip\": true,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"fc5afc32-2149-4036-b4b5-54044b4c2385\"\n    }\n  ],\n  \"properties\": {\n    \"secretSourcePipelineId\": \"sean-test\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/query-pipelines/",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"query-pipelines",
+								""
+							]
+						},
+						"description": "Create basic query pipeline with hl, phrase, q.alt, mm"
+					},
+					"response": []
+				},
+				{
+					"name": "Update sean-test query pipeline",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"sean-test\",\n    \"stages\": [\n        {\n            \"type\": \"set-params\",\n            \"id\": \"n0b\",\n            \"params\": [\n                {\n                    \"key\": \"pf\",\n                    \"value\": \"title_t^10 body_t^5 description_t^10\",\n                    \"policy\": \"append\"\n                }\n            ],\n            \"type\": \"set-params\",\n            \"skip\": false,\n            \"label\": \"phrase boosting\",\n            \"licensed\": true,\n            \"secretSourceStageId\": \"n0b\"\n        },\n        {\n            \"type\": \"set-params\",\n            \"id\": \"jjw\",\n            \"params\": [\n                {\n                    \"key\": \"q.alt\",\n                    \"value\": \"*:*\",\n                    \"policy\": \"append\"\n                }\n            ],\n            \"type\": \"set-params\",\n            \"skip\": false,\n            \"label\": \"q.alt\",\n            \"licensed\": true,\n            \"secretSourceStageId\": \"jjw\"\n        },\n        {\n            \"type\": \"set-params\",\n            \"id\": \"bq7\",\n            \"params\": [\n                {\n                    \"key\": \"hl\",\n                    \"value\": \"on\",\n                    \"policy\": \"default\"\n                },\n                {\n                    \"key\": \"hl.fl\",\n                    \"value\": \"*\",\n                    \"policy\": \"default\"\n                },\n                {\n                    \"key\": \"hl.snippets\",\n                    \"value\": \"3\",\n                    \"policy\": \"default\"\n                }\n            ],\n            \"type\": \"set-params\",\n            \"skip\": false,\n            \"label\": \"hl params\",\n            \"licensed\": true,\n            \"secretSourceStageId\": \"bq7\"\n        },\n        {\n            \"type\": \"set-params\",\n            \"id\": \"ag\",\n            \"params\": [\n                {\n                    \"key\": \"mm\",\n                    \"value\": \"2\",\n                    \"policy\": \"default\"\n                }\n            ],\n            \"type\": \"set-params\",\n            \"skip\": false,\n            \"label\": \"mm params\",\n            \"licensed\": true,\n            \"secretSourceStageId\": \"ag\"\n        },\n        {\n            \"type\": \"text-tagger\",\n            \"id\": \"4bed1173-c90b-4b2a-992d-db4df2d697b6\",\n            \"useEmbeddedSolrServer\": false,\n            \"paramToTag\": \"q\",\n            \"spell_corrections_enabled\": true,\n            \"phrase_boosting_enabled\": true,\n            \"tail_rewrites_enabled\": true,\n            \"phraseBoost\": 2.0,\n            \"phraseSlop\": 10,\n            \"synonymExpansionBoost\": 2.0,\n            \"synonym_expansion_enabled\": true,\n            \"overlaps\": \"ALL\",\n            \"params\": [],\n            \"type\": \"text-tagger\",\n            \"skip\": true,\n            \"licensed\": true,\n            \"secretSourceStageId\": \"4bed1173-c90b-4b2a-992d-db4df2d697b6\"\n        },\n        {\n            \"type\": \"recommendation\",\n            \"id\": \"b0b84fd9-89a4-47c3-b1f3-956216dd6561\",\n            \"numRecommendations\": 10,\n            \"numSignals\": 100,\n            \"aggrType\": \"click@doc_id,filters,query\",\n            \"boostId\": \"id\",\n            \"boostingMethod\": \"query-param\",\n            \"boostingParam\": \"boost\",\n            \"queryParams\": [\n                {\n                    \"key\": \"qf\",\n                    \"value\": \"query_t\"\n                },\n                {\n                    \"key\": \"pf\",\n                    \"value\": \"query_t^50\"\n                },\n                {\n                    \"key\": \"pf\",\n                    \"value\": \"query_t~3^20\"\n                },\n                {\n                    \"key\": \"pf2\",\n                    \"value\": \"query_t^20\"\n                },\n                {\n                    \"key\": \"pf2\",\n                    \"value\": \"query_t~3^10\"\n                },\n                {\n                    \"key\": \"pf3\",\n                    \"value\": \"query_t^10\"\n                },\n                {\n                    \"key\": \"pf3\",\n                    \"value\": \"query_t~3^5\"\n                },\n                {\n                    \"key\": \"boost\",\n                    \"value\": \"map(query({!field f=query_s v=$q}),0,0,1,20)\"\n                },\n                {\n                    \"key\": \"mm\",\n                    \"value\": \"50%\"\n                },\n                {\n                    \"key\": \"defType\",\n                    \"value\": \"edismax\"\n                },\n                {\n                    \"key\": \"sort\",\n                    \"value\": \"score desc, weight_d desc\"\n                }\n            ],\n            \"rollupField\": \"doc_id_s\",\n            \"rollupWeightField\": \"weight_d\",\n            \"weightExpression\": \"math:log(weight_d + 1) + 10 * math:log(score+1)\",\n            \"rollupWeightStrategy\": \"max\",\n            \"type\": \"recommendation\",\n            \"skip\": true,\n            \"licensed\": true,\n            \"secretSourceStageId\": \"b0b84fd9-89a4-47c3-b1f3-956216dd6561\"\n        },\n        {\n            \"type\": \"search-fields\",\n            \"id\": \"09618459-2b44-4725-9d23-0e0df55c1df9\",\n            \"rows\": 10,\n            \"start\": 0,\n            \"queryFields\": [\n                {\n                    \"field\": \"body_txt_en\",\n                    \"boost\": 2.0\n                },\n                {\n                    \"field\": \"body_t\",\n                    \"boost\": 5.0\n                },\n                {\n                    \"field\": \"title_t\",\n                    \"boost\": 20.0\n                },\n                {\n                    \"field\": \"title_txt_en\",\n                    \"boost\": 10.0\n                },\n                {\n                    \"field\": \"description_txt_en\",\n                    \"boost\": 2.0\n                },\n                {\n                    \"field\": \"body_t\",\n                    \"boost\": 5.0\n                },\n                {\n                    \"field\": \"description_t\",\n                    \"boost\": 8.0\n                },\n                {\n                    \"field\": \"_text_\",\n                    \"boost\": 0.01\n                }\n            ],\n            \"returnFields\": [\n                \"*\",\n                \"score\",\n                \"length_l\",\n                \"title_t\",\n                \"fetchedDate_dt\",\n                \"lastModified_dt\",\n                \"description_t\",\n                \"_lw_batch_id_s\",\n                \"_lw_data_source_s\"\n            ],\n            \"type\": \"search-fields\",\n            \"skip\": false,\n            \"licensed\": true,\n            \"secretSourceStageId\": \"09618459-2b44-4725-9d23-0e0df55c1df9\"\n        },\n        {\n            \"type\": \"facet\",\n            \"id\": \"0de1cc5e-8db4-43da-b9cb-199645ce5814\",\n            \"fieldFacets\": [\n                {\n                    \"field\": \"_lw_data_source_s\",\n                    \"minCount\": 1,\n                    \"missing\": false\n                },\n                {\n                    \"field\": \"mimeType_s\",\n                    \"minCount\": 1,\n                    \"missing\": false\n                },\n                {\n                    \"field\": \"parent_s\",\n                    \"minCount\": 1,\n                    \"missing\": false\n                },\n                {\n                    \"field\": \"_lw_parser_content_type_s\",\n                    \"minCount\": 1,\n                    \"missing\": false\n                },\n                {\n                    \"field\": \"_lw_batch_id_s\",\n                    \"minCount\": 1,\n                    \"missing\": false\n                },\n                {\n                    \"field\": \"_lw_parser_charset_s\",\n                    \"minCount\": 1,\n                    \"missing\": false\n                }\n            ],\n            \"type\": \"facet\",\n            \"skip\": false,\n            \"licensed\": true,\n            \"secretSourceStageId\": \"0de1cc5e-8db4-43da-b9cb-199645ce5814\",\n            \"properties\": {\n                \"autoCreated\": true\n            }\n        },\n        {\n            \"type\": \"query-rules\",\n            \"id\": \"5bbeb667-aa21-4cc1-a4bc-d64ef92f27cb\",\n            \"useEmbeddedSolrServer\": false,\n            \"useOriginalQueryIfNoRulesMatch\": true,\n            \"matchPartialFilterQueries\": true,\n            \"handler\": \"select\",\n            \"method\": \"POST\",\n            \"ruleLimit\": \"100\",\n            \"params\": [],\n            \"hierarchicalFilter\": [],\n            \"headers\": [],\n            \"type\": \"query-rules\",\n            \"skip\": true,\n            \"licensed\": true,\n            \"secretSourceStageId\": \"5bbeb667-aa21-4cc1-a4bc-d64ef92f27cb\"\n        },\n        {\n            \"type\": \"solr-query\",\n            \"id\": \"e0538d56-b374-4255-b34c-cfe0ae0d9380\",\n            \"httpMethod\": \"POST\",\n            \"allowFederatedSearch\": false,\n            \"type\": \"solr-query\",\n            \"skip\": false,\n            \"responseSignalsEnabled\": true,\n            \"licensed\": true,\n            \"secretSourceStageId\": \"e0538d56-b374-4255-b34c-cfe0ae0d9380\"\n        },\n        {\n            \"type\": \"query-rules-augment-response\",\n            \"id\": \"fc5afc32-2149-4036-b4b5-54044b4c2385\",\n            \"facetLabelParseDelimiter\": \"||\",\n            \"type\": \"query-rules-augment-response\",\n            \"skip\": true,\n            \"licensed\": true,\n            \"secretSourceStageId\": \"fc5afc32-2149-4036-b4b5-54044b4c2385\"\n        }\n    ],\n    \"properties\": {\n        \"secretSourcePipelineId\": \"sean-test\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/query-pipelines/sean-test",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"query-pipelines",
+								"sean-test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add field to solr schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var minValidQTime = 100;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"operation took some time\", function () {",
+									"    pm.expect(jsonData.responseHeader.QTime).to.be.above(minValidQTime);",
+									"});",
+									"",
+									"pm.test(\"Status == 0\", function () {",
+									"    pm.expect(jsonData.responseHeader.status).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"add-field\": {\n        \"name\": \"test_foo_t\",\n        \"type\": \"text_en\",\n        \"stored\": true\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/solr/{{coll}}/schema",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"solr",
+								"{{coll}}",
+								"schema"
+							]
+						},
+						"description": "just a demo call for modifying schema "
+					},
+					"response": []
+				},
+				{
+					"name": "Delete field from solr schema",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"var minValidQTime = 100;",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"operation took some time\", function () {",
+									"    pm.expect(jsonData.responseHeader.QTime).to.be.above(minValidQTime);",
+									"});",
+									"",
+									"pm.test(\"Status == 0\", function () {",
+									"    pm.expect(jsonData.responseHeader.status).to.eql(0);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"delete-field\" : { \"name\":\"test_foo_t\" }}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/solr/{{coll}}/schema",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"solr",
+								"{{coll}}",
+								"schema"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "F5 Get Basic license info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/license",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"license"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET system-logs query definition",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"numfound matches expected count\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.response.numFound).to.be.gt(1);",
+									"",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/apollo/apps/{{app}}/query-pipelines/system-logs-browser",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apollo",
+								"apps",
+								"{{app}}",
+								"query-pipelines",
+								"system-logs-browser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE query pipeline: system logs browser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"system-logs-browser\",\n  \"stages\": [\n    {\n      \"type\": \"set-params\",\n      \"id\": \"91n\",\n      \"params\": [\n        {\n          \"key\": \"sort\",\n          \"value\": \"timestamp_tdt desc\",\n          \"policy\": \"append\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"Sort Timestamp desc\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"91n\"\n    },\n    {\n      \"type\": \"set-params\",\n      \"id\": \"70l\",\n      \"params\": [\n        {\n          \"key\": \"pf\",\n          \"value\": \"logmessage_txt^10 message_txt^10\",\n          \"policy\": \"default\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"phrase field\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"70l\"\n    },\n    {\n      \"type\": \"set-params\",\n      \"id\": \"4oe\",\n      \"params\": [\n        {\n          \"key\": \"hl\",\n          \"value\": \"on\",\n          \"policy\": \"default\"\n        },\n        {\n          \"key\": \"hl.fl\",\n          \"value\": \"*\",\n          \"policy\": \"default\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"HL params\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"4oe\"\n    },\n    {\n      \"type\": \"set-params\",\n      \"id\": \"wagj\",\n      \"params\": [\n        {\n          \"key\": \"q.alt\",\n          \"value\": \"*:*\",\n          \"policy\": \"default\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"Q.alt\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"wagj\"\n    },\n    {\n      \"type\": \"set-params\",\n      \"id\": \"67b\",\n      \"params\": [\n        {\n          \"key\": \"fq\",\n          \"value\": \"timestamp_tdt:[NOW/MINUTE-15MINUTES TO *]\",\n          \"policy\": \"append\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"Filter to recent messages\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"67b\"\n    },\n    {\n      \"type\": \"set-params\",\n      \"id\": \"59a\",\n      \"params\": [\n        {\n          \"key\": \"fq\",\n          \"value\": \"-mdc_job_s:spark*\",\n          \"policy\": \"append\"\n        },\n        {\n          \"key\": \"fq\",\n          \"value\": \"-cause_file_s:(Ignite* SparkJobTask.java GridClosureProcessor.java ComputeTaskAdapter.java)\",\n          \"policy\": \"append\"\n        },\n        {\n          \"key\": \"fq\",\n          \"value\": \"-cause_class_s:(\\\"org.apache.ignite*\\\")\",\n          \"policy\": \"append\"\n        },\n        {\n          \"key\": \"fq\",\n          \"value\": \"-file_s:(\\\"/opt/fusion/var/log/api/spark-driver-default.log\\\")\",\n          \"policy\": \"append\"\n        },\n        {\n          \"key\": \"fq\",\n          \"value\": \"-logger_class_s:(spark.client.SparkJobTask spark.job.SparkJobManager scheduler*)\",\n          \"policy\": \"append\"\n        },\n        {\n          \"key\": \"fq\",\n          \"value\": \"-level_s:INFO\",\n          \"policy\": \"append\"\n        }\n      ],\n      \"type\": \"set-params\",\n      \"skip\": false,\n      \"label\": \"Filter out noise\",\n      \"licensed\": true,\n      \"secretSourceStageId\": \"59a\"\n    },\n\n    {\n      \"type\": \"search-fields\",\n      \"id\": \"36d5a725-9e19-4b3b-8593-041142bf7993\",\n      \"rows\": 10,\n      \"start\": 0,\n      \"queryFields\": [],\n      \"returnFields\": [\n        \"*\",\n        \"score\"\n      ],\n      \"type\": \"search-fields\",\n      \"skip\": false,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"36d5a725-9e19-4b3b-8593-041142bf7993\"\n    },\n    {\n      \"type\": \"facet\",\n      \"id\": \"890a1e71-6886-48a3-b923-5078706250ac\",\n      \"fieldFacets\": [\n        {\n          \"field\": \"file_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"level_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"mdc_datasourceId_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"mdc_job_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"mdc_jobRunId_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"service_s\",\n          \"minCount\": 1,\n          \"missing\": false\n        },\n        {\n          \"field\": \"timestamp_tdt\",\n          \"minCount\": 1,\n          \"missing\": false\n        }\n      ],\n      \"type\": \"facet\",\n      \"skip\": false,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"890a1e71-6886-48a3-b923-5078706250ac\",\n      \"properties\": {\n        \"autoCreated\": true\n      }\n    },\n    {\n      \"type\": \"solr-query\",\n      \"id\": \"9b3d191e-0f45-4aee-99c7-bf5569586e90\",\n      \"httpMethod\": \"POST\",\n      \"allowFederatedSearch\": false,\n      \"type\": \"solr-query\",\n      \"skip\": false,\n      \"responseSignalsEnabled\": true,\n      \"licensed\": true,\n      \"secretSourceStageId\": \"9b3d191e-0f45-4aee-99c7-bf5569586e90\"\n    }\n  ],\n  \"properties\": {\n    \"secretSourcePipelineId\": \"system-logs-browser\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/query-pipelines",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"query-pipelines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create synonyms.rei.txt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "lw->lucidworks\r\nFusion,Awesome\r\nesh,erik s hatcher"
+						},
+						"url": {
+							"raw": "{{furl}}/api/collections/{{coll}}/solr-config/synonyms.demo.txt?reload=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"collections",
+								"{{coll}}",
+								"solr-config",
+								"synonyms.demo.txt"
+							],
+							"query": [
+								{
+									"key": "reload",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Jobs",
+			"item": [
+				{
+					"name": "Get signals aggr job definition",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/tasks",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"tasks"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "get various signals related jobs"
+		},
+		{
+			"name": "Visualizations",
+			"item": [
+				{
+					"name": "Datasource Jobs statuses with visualization",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `",
+									"    <table bgcolor=\"#FFFFFF\">",
+									"        <tr>",
+									"            <th>resource</th>",
+									"            <th>enabled</th>",
+									"            <th>status</th>",
+									"            <th>lastStartTime</th>",
+									"            <th>lastEndTime</th>",
+									"            <th>counter.new</th> ",
+									"        </tr>",
+									"",
+									"        {{#each response}}",
+									"            <tr>",
+									"                <td>{{resource}}</td>",
+									"                <td>{{enabled}}</td>",
+									"                <td>{{status}}</td>",
+									"                <td>{{lastStartTime}}</td>",
+									"                <td>{{lastEndTime}}</td>",
+									"                <td>{{extra.counter.new}}</td>",
+									"            </tr>",
+									"        {{/each}}",
+									"    </table>",
+									"`;",
+									"// Set visualizer",
+									"pm.visualizer.set(template, {",
+									"    // Pass the response body parsed as JSON as `data`",
+									"    response: pm.response.json()",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/jobs?type=datasource",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"jobs"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "datasource"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Export datasource",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{furl}}/api/connectors/datasources/{{dsrc}}",
+									"host": [
+										"{{furl}}"
+									],
+									"path": [
+										"api",
+										"connectors",
+										"datasources",
+										"{{dsrc}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "fusion-request-id",
+									"value": "Dvd48AMp4j"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.19.v20190610)"
+								},
+								{
+									"key": "Content-Length",
+									"value": "4282"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"ca-structured-data\",\n    \"created\": \"2020-06-20T11:18:48.307Z\",\n    \"modified\": \"2020-06-20T11:18:48.307Z\",\n    \"connector\": \"lucid.web\",\n    \"type\": \"web\",\n    \"description\": \"https://nystudio107.com/blog/annotated-json-ld-structured-data-examples\",\n    \"pipeline\": \"test\",\n    \"parserId\": \"test\",\n    \"properties\": {\n        \"refreshOlderThan\": -1,\n        \"f.selectorFields\": [\n            \"script[type=\\\"application/ld+json\\\"]\"\n        ],\n        \"f.appendTrailingSlashToLinks\": false,\n        \"restrictToTreeIgnoredHostPrefixes\": [\n            \"www.\"\n        ],\n        \"refreshErrors\": false,\n        \"crawlDBType\": \"on-disk\",\n        \"dedupeSaveSignature\": false,\n        \"f.allowCircularRedirects\": false,\n        \"f.firefoxHeadlessBrowser\": true,\n        \"f.discardLinkURLQueries\": false,\n        \"f.respectMetaEquivRedirects\": false,\n        \"fetchDelayMS\": 0,\n        \"commitAfterItems\": 10000,\n        \"refreshAll\": true,\n        \"f.defaultMIMEType\": \"application/octet-stream\",\n        \"f.extraLoadTimeMs\": 250,\n        \"f.jsPageLoadTimeout\": 20000,\n        \"restrictToTreeAllowSubdomains\": false,\n        \"f.requestCounterMinWaitMs\": 5000,\n        \"f.jsScriptTimeout\": 20000,\n        \"maxItems\": 10,\n        \"f.jsAjaxTimeout\": 20000,\n        \"trackEmbeddedIDs\": true,\n        \"f.scrapeLinksBeforeFiltering\": false,\n        \"dedupe\": false,\n        \"f.allowAllCertificates\": false,\n        \"collection\": \"test\",\n        \"f.obeyRobotsMeta\": true,\n        \"forceRefresh\": true,\n        \"delete404\": true,\n        \"parserRetryCount\": 0,\n        \"f.obeyRobots\": true,\n        \"f.quitTimeoutMs\": 5000,\n        \"f.index_items_discarded\": false,\n        \"fetchDelayMSPerHost\": true,\n        \"fetchThreads\": 10,\n        \"f.jsEnabledAuth\": false,\n        \"f.requestRetryCount\": 0,\n        \"indexCrawlDBToSolr\": false,\n        \"restrictToTree\": true,\n        \"retainOutlinks\": false,\n        \"f.defaultCharSet\": \"UTF-8\",\n        \"f.useIpAddressForSslConnections\": false,\n        \"f.useRequestCounter\": true,\n        \"f.headlessBrowser\": true,\n        \"emitThreads\": 10,\n        \"f.canonicalTagsRedirectLimit\": 4,\n        \"f.useFirefox\": false,\n        \"diagnosticMode\": false,\n        \"f.requestCounterMaxWaitMs\": 20000,\n        \"f.obeyCharSet\": true,\n        \"f.followCanonicalTags\": false,\n        \"delete\": true,\n        \"initial_mapping\": {\n            \"mappings\": [\n                {\n                    \"source\": \"charSet\",\n                    \"operation\": \"move\",\n                    \"target\": \"charSet_s\"\n                },\n                {\n                    \"source\": \"fetchedDate\",\n                    \"operation\": \"move\",\n                    \"target\": \"fetchedDate_dt\"\n                },\n                {\n                    \"source\": \"lastModified\",\n                    \"operation\": \"move\",\n                    \"target\": \"lastModified_dt\"\n                },\n                {\n                    \"source\": \"signature\",\n                    \"operation\": \"move\",\n                    \"target\": \"dedupeSignature_s\"\n                },\n                {\n                    \"source\": \"length\",\n                    \"operation\": \"move\",\n                    \"target\": \"length_l\"\n                },\n                {\n                    \"source\": \"mimeType\",\n                    \"operation\": \"move\",\n                    \"target\": \"mimeType_s\"\n                },\n                {\n                    \"source\": \"parent\",\n                    \"operation\": \"move\",\n                    \"target\": \"parent_s\"\n                },\n                {\n                    \"source\": \"owner\",\n                    \"operation\": \"move\",\n                    \"target\": \"owner_s\"\n                },\n                {\n                    \"source\": \"group\",\n                    \"operation\": \"move\",\n                    \"target\": \"group_s\"\n                }\n            ],\n            \"skip\": false,\n            \"id\": \"FromMap\",\n            \"type\": \"field-mapping\",\n            \"reservedFieldsMappingAllowed\": false\n        },\n        \"f.extraPageLoadDeltaChars\": 0,\n        \"f.maintainCookies\": false,\n        \"restrictToTreeUseHostAndPath\": false,\n        \"sitemap_incremental_crawling\": false,\n        \"f.screenshotFullscreen\": false,\n        \"f.filteringRootTags\": [\n            \"body\",\n            \"head\"\n        ],\n        \"f.timeoutMS\": 10000,\n        \"failFastOnStartLinkFailure\": true,\n        \"startLinks\": [\n            \"https://nystudio107.com/blog/annotated-json-ld-structured-data-examples\",\n            \"https://feedarmy.com/kb/adding-microdata-to-your-ecommerce-website-schema-org/\"\n        ],\n        \"f.discardLinkURLAnchors\": true,\n        \"f.simulateMobile\": false,\n        \"forceRefreshClearSignatures\": true,\n        \"chunkSize\": 1,\n        \"f.obeyRobotsDelay\": true,\n        \"f.obeyLinkNofollow\": true,\n        \"f.useHighPerfJsEval\": false,\n        \"deleteErrorsAfter\": -1,\n        \"f.userAgentName\": \"Lucidworks-Anda/2.0\",\n        \"retryEmit\": true,\n        \"f.crawlJS\": false,\n        \"depth\": 1,\n        \"f.cookieSpec\": \"browser-compatibility\",\n        \"refreshStartLinks\": true,\n        \"f.maxSizeBytes\": 4194304,\n        \"aliasExpiration\": 1,\n        \"f.takeScreenshot\": false\n    }\n}"
+						},
+						{
+							"name": "Export datasource ca-parsing-test-2r",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{furl}}/api/connectors/datasources/ca-parsing-test-2r",
+									"host": [
+										"{{furl}}"
+									],
+									"path": [
+										"api",
+										"connectors",
+										"datasources",
+										"ca-parsing-test-2r"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "fusion-request-id",
+									"value": "2WusNVJ2E7"
+								},
+								{
+									"key": "Server",
+									"value": "Jetty(9.4.19.v20190610)"
+								},
+								{
+									"key": "Set-Cookie",
+									"value": "id=7c570a5b-ea69-4f72-88c1-fd20ce16239d;Path=/;HttpOnly"
+								},
+								{
+									"key": "Content-Length",
+									"value": "4343"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"ca-parsing-test-2r\",\n    \"created\": \"2020-06-17T22:40:06.635Z\",\n    \"modified\": \"2020-06-17T22:40:06.635Z\",\n    \"connector\": \"lucid.web\",\n    \"type\": \"web\",\n    \"pipeline\": \"test\",\n    \"parserId\": \"test\",\n    \"properties\": {\n        \"refreshOlderThan\": -1,\n        \"f.appendTrailingSlashToLinks\": false,\n        \"restrictToTreeIgnoredHostPrefixes\": [\n            \"www.\"\n        ],\n        \"refreshErrors\": false,\n        \"crawlDBType\": \"on-disk\",\n        \"dedupeSaveSignature\": false,\n        \"f.allowCircularRedirects\": false,\n        \"f.firefoxHeadlessBrowser\": true,\n        \"f.discardLinkURLQueries\": false,\n        \"f.respectMetaEquivRedirects\": false,\n        \"fetchDelayMS\": 0,\n        \"commitAfterItems\": 10000,\n        \"refreshAll\": true,\n        \"f.defaultMIMEType\": \"application/octet-stream\",\n        \"f.extraLoadTimeMs\": 250,\n        \"f.jsPageLoadTimeout\": 20000,\n        \"restrictToTreeAllowSubdomains\": false,\n        \"f.requestCounterMinWaitMs\": 5000,\n        \"f.jsScriptTimeout\": 20000,\n        \"f.jsAjaxTimeout\": 20000,\n        \"maxItems\": -1,\n        \"trackEmbeddedIDs\": true,\n        \"f.scrapeLinksBeforeFiltering\": false,\n        \"dedupe\": false,\n        \"f.allowAllCertificates\": false,\n        \"collection\": \"test\",\n        \"f.obeyRobotsMeta\": true,\n        \"forceRefresh\": false,\n        \"delete404\": true,\n        \"parserRetryCount\": 0,\n        \"f.obeyRobots\": true,\n        \"f.quitTimeoutMs\": 5000,\n        \"f.index_items_discarded\": false,\n        \"fetchDelayMSPerHost\": true,\n        \"f.jsEnabledAuth\": false,\n        \"f.requestRetryCount\": 0,\n        \"indexCrawlDBToSolr\": false,\n        \"fetchThreads\": 5,\n        \"restrictToTree\": true,\n        \"retainOutlinks\": false,\n        \"f.defaultCharSet\": \"UTF-8\",\n        \"f.useIpAddressForSslConnections\": false,\n        \"f.useRequestCounter\": true,\n        \"f.headlessBrowser\": true,\n        \"emitThreads\": 5,\n        \"f.canonicalTagsRedirectLimit\": 4,\n        \"f.useFirefox\": false,\n        \"diagnosticMode\": false,\n        \"f.requestCounterMaxWaitMs\": 20000,\n        \"f.obeyCharSet\": true,\n        \"f.followCanonicalTags\": false,\n        \"delete\": true,\n        \"initial_mapping\": {\n            \"mappings\": [\n                {\n                    \"source\": \"charSet\",\n                    \"operation\": \"move\",\n                    \"target\": \"charSet_s\"\n                },\n                {\n                    \"source\": \"fetchedDate\",\n                    \"operation\": \"move\",\n                    \"target\": \"fetchedDate_dt\"\n                },\n                {\n                    \"source\": \"lastModified\",\n                    \"operation\": \"move\",\n                    \"target\": \"lastModified_dt\"\n                },\n                {\n                    \"source\": \"signature\",\n                    \"operation\": \"move\",\n                    \"target\": \"dedupeSignature_s\"\n                },\n                {\n                    \"source\": \"length\",\n                    \"operation\": \"move\",\n                    \"target\": \"length_l\"\n                },\n                {\n                    \"source\": \"mimeType\",\n                    \"operation\": \"move\",\n                    \"target\": \"mimeType_s\"\n                },\n                {\n                    \"source\": \"parent\",\n                    \"operation\": \"move\",\n                    \"target\": \"parent_s\"\n                },\n                {\n                    \"source\": \"owner\",\n                    \"operation\": \"move\",\n                    \"target\": \"owner_s\"\n                },\n                {\n                    \"source\": \"group\",\n                    \"operation\": \"move\",\n                    \"target\": \"group_s\"\n                }\n            ],\n            \"skip\": false,\n            \"id\": \"FromMap\",\n            \"type\": \"field-mapping\",\n            \"reservedFieldsMappingAllowed\": false\n        },\n        \"f.extraPageLoadDeltaChars\": 0,\n        \"f.maintainCookies\": false,\n        \"restrictToTreeUseHostAndPath\": false,\n        \"sitemap_incremental_crawling\": false,\n        \"f.screenshotFullscreen\": false,\n        \"f.filteringRootTags\": [\n            \"body\",\n            \"head\"\n        ],\n        \"f.timeoutMS\": 10000,\n        \"failFastOnStartLinkFailure\": true,\n        \"startLinks\": [\n            \"https://www.canada.ca/en/canadian-heritage/services/royal-symbols-titles.html\",\n            \"https://www.canada.ca/en/canadian-heritage/services/royal-symbols-titles/canadian-flags-royal-family.html\",\n            \"https://www.canada.ca/fr/patrimoine-canadien/campagnes/jour-drapeau-national-canada/coin-enseignants.html\",\n            \"https://www.canada.ca/fr/patrimoine-canadien/services/canada-holocauste.html\"\n        ],\n        \"f.discardLinkURLAnchors\": true,\n        \"f.simulateMobile\": false,\n        \"forceRefreshClearSignatures\": true,\n        \"chunkSize\": 1,\n        \"f.obeyRobotsDelay\": true,\n        \"f.obeyLinkNofollow\": true,\n        \"f.useHighPerfJsEval\": false,\n        \"deleteErrorsAfter\": -1,\n        \"f.userAgentName\": \"Lucidworks-Anda/2.0\",\n        \"retryEmit\": true,\n        \"f.crawlJS\": false,\n        \"depth\": -1,\n        \"f.cookieSpec\": \"browser-compatibility\",\n        \"f.maxSizeBytes\": 4194304,\n        \"refreshStartLinks\": false,\n        \"aliasExpiration\": 1,\n        \"f.takeScreenshot\": false\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Generate Singals:basic F4.x",
+			"item": [
+				{
+					"name": "Get Sample query for building signals",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"x-fusion-query-id exists and is saved\", function () {",
+									"    var json = pm.response.json();",
+									"    let fq_id = pm.response.headers.get(\"x-fusion-query-id\");",
+									"    pm.environment.set(\"fq_id\", fq_id);",
+									"",
+									"    let currentQry = json.responseHeader.params.q;",
+									"    pm.environment.set(\"currentQry\", currentQry);",
+									"    ",
+									"    let docs = json.response.docs;",
+									"    // let doc5id = docs[4].id;",
+									"    pm.environment.set(\"qryDocs\", docs);",
+									"    ",
+									"    console.info(\"Set to environment fq_id: \" + fq_id + \" --- q: \" + currentQry + \" -- qryDocs: \" + docs);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/query-pipelines/{{app}}/collections/{{coll}}/select?q=financing&bu={{bu}}&category={{category}}&subcategory={{subcategory}}",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"query-pipelines",
+								"{{app}}",
+								"collections",
+								"{{coll}}",
+								"select"
+							],
+							"query": [
+								{
+									"key": "rows",
+									"value": "50",
+									"disabled": true
+								},
+								{
+									"key": "q",
+									"value": "financing",
+									"description": "get from folder vars"
+								},
+								{
+									"key": "bu",
+									"value": "{{bu}}",
+									"description": "example of sending bu with query"
+								},
+								{
+									"key": "category",
+									"value": "{{category}}",
+									"description": "example of sending category with query"
+								},
+								{
+									"key": "subcategory",
+									"value": "{{subcategory}}",
+									"description": "example of sending subcategory with query"
+								}
+							]
+						},
+						"description": "capture the x-fusion-query-id\neg: x-fusion-query-id: GrkozUSzi4\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Add custom UI signals",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var fq_id = pm.environment.get(\"fq_id\");",
+									"let currentQry = pm.environment.get(\"currentQry\");",
+									"let qryDocs = pm.environment.get(\"qryDocs\");",
+									"console.info(qryDocs);",
+									"",
+									"let doc2id = qryDocs[2].id;",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"type\": \"right-click:new-tab\",\n        \"params\": {\n            \"docId\": \"{{doc2id}}\",\n            \"count\": 555,\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: Add custom right-click signal\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    },\n        {\n        \"type\": \"mousewheel-click:new-tab\",\n        \"params\": {\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: Add custom signal: mousewheel click\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/signals/{{coll}}?async=false&commit=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"signals",
+								"{{coll}}"
+							],
+							"query": [
+								{
+									"key": "async",
+									"value": "false"
+								},
+								{
+									"key": "commit",
+									"value": "true"
+								}
+							]
+						},
+						"description": "page scroll, right click:new page,...\nNOTE: these all assume the UI/front-end javascript captures these events, these calls only receive those signals sent from the UI"
+					},
+					"response": []
+				},
+				{
+					"name": "Add sample signals docs 5,6,7",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var fq_id = pm.environment.get(\"fq_id\");",
+									"let currentQry = pm.environment.get(\"currentQry\");",
+									"let qryDocs = pm.environment.get(\"qryDocs\");",
+									"console.info(qryDocs);",
+									"",
+									"let doc5id = qryDocs[4].id;",
+									"let doc6id = qryDocs[5].id;",
+									"let doc7id = qryDocs[6].id;",
+									"",
+									"console.info(\"Get from env fq_id : \" + fq_id + \" --- Q from pre-request: \" + currentQry + \" --- doc5id:\" + doc5id  + \" --- doc6id:\" + doc6id  + \" --- doc7id:\" + doc7id );",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"type\": \"click\",\n        \"params\": {\n            \"docId\": \"{{doc5id}}\",\n            \"count\": 5,\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: Add basic signal\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"BU\":\"hybrid cloud\",\n            \"Category\": \"solutions\",\n            \"SubCategory\": \"virtualization\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    },\n        {\n        \"type\": \"click\",\n        \"params\": {\n            \"docId\": \"{{doc6id}}\",\n            \"count\": 6,\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: Add basic signal\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"BU\":\"hybrid cloud\",\n            \"Category\": \"solutions\",\n            \"SubCategory\": \"virtualization\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    },\n    {\n        \"type\": \"click\",\n        \"BU\":\"hybrid cloud -- put in 'params' section or this gets dropped\",\n        \"Category\": \"solutions -- put in 'params' section or this gets dropped\",\n        \"SubCategory\": \"virtualization -- put in 'params' section or this gets dropped\",\n        \"params\": {\n            \"docId\": \"{{doc7id}}\",\n            \"count\": 7,\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: putting params one level up ---NOTE: this won't work as desired missing BU, cat, subcat above\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/apollo/apps/{{app}}/signals/hpe?async=false&commit=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apollo",
+								"apps",
+								"{{app}}",
+								"signals",
+								"hpe"
+							],
+							"query": [
+								{
+									"key": "async",
+									"value": "false"
+								},
+								{
+									"key": "commit",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Test case for adding the most basic signal possible via postman"
+					},
+					"response": []
+				}
+			],
+			"description": "very basic signals generation / testing . -- Untested, but should have a request or two in the older F4.2.x format\n\n\nhttps://doc.lucidworks.com/fusion-server/4.2/reference/api/signals-api.html",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Generate Singals:basic F5.x",
+			"item": [
+				{
+					"name": "Get Sample query for building signals",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"pm.test(\"x-fusion-query-id exists and is saved\", function () {",
+									"    var json = pm.response.json();",
+									"    let fq_id = pm.response.headers.get(\"x-fusion-query-id\");",
+									"    pm.environment.set(\"fq_id\", fq_id);",
+									"",
+									"    let currentQry = json.responseHeader.params.q;",
+									"    pm.environment.set(\"currentQry\", currentQry);",
+									"    ",
+									"    let docs = json.response.docs;",
+									"    // let doc5id = docs[4].id;",
+									"    pm.environment.set(\"qryDocs\", docs);",
+									"    ",
+									"    console.info(\"Set to environment fq_id: \" + fq_id + \" --- q: \" + currentQry + \" -- qryDocs: \" + docs);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/query-pipelines/{{qryp}}/collections/{{coll}}/select?bu={{bu}}&category={{category}}&subcategory={{subcategory}}&q=spark",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"query-pipelines",
+								"{{qryp}}",
+								"collections",
+								"{{coll}}",
+								"select"
+							],
+							"query": [
+								{
+									"key": "rows",
+									"value": "50",
+									"disabled": true
+								},
+								{
+									"key": "bu",
+									"value": "{{bu}}",
+									"description": "example of sending bu with query"
+								},
+								{
+									"key": "category",
+									"value": "{{category}}",
+									"description": "example of sending category with query"
+								},
+								{
+									"key": "subcategory",
+									"value": "{{subcategory}}",
+									"description": "example of sending subcategory with query"
+								},
+								{
+									"key": "q",
+									"value": "spark"
+								}
+							]
+						},
+						"description": "capture the x-fusion-query-id\neg: x-fusion-query-id: GrkozUSzi4\n"
+					},
+					"response": []
+				},
+				{
+					"name": "Add custom UI signals",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var fq_id = pm.environment.get(\"fq_id\");",
+									"let currentQry = pm.environment.get(\"currentQry\");",
+									"let qryDocs = pm.environment.get(\"qryDocs\");",
+									"console.info(qryDocs);",
+									"",
+									"let doc2id = qryDocs[2].id;",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"type\": \"click\",\n        \"params\": {\n            \"docId\": \"{{doc2id}}\",\n            \"count\": 1,\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: basic click signal\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    },\n    {\n        \"type\": \"click\",\n        \"params\": {\n            \"docId\": \"{{doc2id}}\",\n            \"count\": 555,\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: Add custom right-click signal\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    },\n        {\n        \"type\": \"mousewheel-click new-tab\",\n        \"params\": {\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: Add custom signal: mousewheel click\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    },\n    {\n        \"type\": \"bookmark\",\n        \"params\": {\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: Add custom signal: bookmark\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/signals/{{coll}}?async=false&commit=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"signals",
+								"{{coll}}"
+							],
+							"query": [
+								{
+									"key": "async",
+									"value": "false"
+								},
+								{
+									"key": "commit",
+									"value": "true"
+								}
+							]
+						},
+						"description": "page scroll, right click:new page,...\nNOTE: these all assume the UI/front-end javascript captures these events, these calls only receive those signals sent from the UI"
+					},
+					"response": []
+				},
+				{
+					"name": "Add sample signals docs 5,6,7",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var fq_id = pm.environment.get(\"fq_id\");",
+									"let currentQry = pm.environment.get(\"currentQry\");",
+									"let qryDocs = pm.environment.get(\"qryDocs\");",
+									"console.info(qryDocs);",
+									"",
+									"let doc5id = qryDocs[4].id;",
+									"let doc6id = qryDocs[5].id;",
+									"let doc7id = qryDocs[6].id;",
+									"",
+									"console.info(\"Get from env fq_id : \" + fq_id + \" --- Q from pre-request: \" + currentQry + \" --- doc5id:\" + doc5id  + \" --- doc6id:\" + doc6id  + \" --- doc7id:\" + doc7id );",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"type\": \"click\",\n        \"params\": {\n            \"docId\": \"{{doc5id}}\",\n            \"count\": 5,\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: Add basic signal\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"BU\":\"hybrid cloud\",\n            \"Category\": \"solutions\",\n            \"SubCategory\": \"virtualization\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    },\n        {\n        \"type\": \"click\",\n        \"params\": {\n            \"docId\": \"{{doc6id}}\",\n            \"count\": 6,\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: Add basic signal\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"BU\":\"hybrid cloud\",\n            \"Category\": \"solutions\",\n            \"SubCategory\": \"virtualization\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    },\n    {\n        \"type\": \"click\",\n        \"BU\":\"hybrid cloud -- put in 'params' section or this gets dropped\",\n        \"Category\": \"solutions -- put in 'params' section or this gets dropped\",\n        \"SubCategory\": \"virtualization -- put in 'params' section or this gets dropped\",\n        \"params\": {\n            \"docId\": \"{{doc7id}}\",\n            \"count\": 7,\n            \"source\": \"postman test\",\n            \"note\": \"postman test script: putting params one level up ---NOTE: this won't work as desired missing BU, cat, subcat above\",\n            \"collection\": \"{{coll}}\",\n            \"query\": \"{{currentQry}}\",\n            \"fusion-query-id\": \"{{fq_id}}\",\n            \"testData\": \"true\",\n            \"filterQueries\": []\n        }\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/signals/{{coll}}?async=false&commit=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"signals",
+								"{{coll}}"
+							],
+							"query": [
+								{
+									"key": "async",
+									"value": "false"
+								},
+								{
+									"key": "commit",
+									"value": "true"
+								}
+							]
+						},
+						"description": "Test case for adding the most basic signal possible via postman"
+					},
+					"response": []
+				}
+			],
+			"description": "very basic signals generation / testing F5.x (slight difference in api syntax)\n\nhttps://doc.lucidworks.com/fusion-server/5.2/reference/api/signals-api.html",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Blobs",
+			"item": [
+				{
+					"name": "Get a file blob",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{furl}}/api/blobs/userkeymatches-to-import.csv",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"blobs",
+								"userkeymatches-to-import.csv"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Content curation",
+			"item": [
+				{
+					"name": "DELETE content by query tag_ss:* xml",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<delete>\n    <query>dataSource_s:EpiServer</query>\n</delete>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/solr/{{coll}}/select?q=*:*",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"solr",
+								"{{coll}}",
+								"select"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "*:*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delet content by query tag_ss:*",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<delete>\n    <query>dataSource_s:EpiServer</query>\n</delete>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/solr/{{coll}}/update?commit=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"solr",
+								"{{coll}}",
+								"update"
+							],
+							"query": [
+								{
+									"key": "commit",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete tag_ss",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "<delete>\n    <query>tag_ss:*</query>\n</delete>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/solr/{{coll}}/update?commit=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"solr",
+								"{{coll}}",
+								"update"
+							],
+							"query": [
+								{
+									"key": "commit",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Typeahead setup",
+			"item": [
+				{
+					"name": "Create Typeahead Collection",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\" : \"{{app}}-typeahead\",\n  \"searchClusterId\" : \"default\",\n  \"commitWithin\" : 10000,\n  \"solrParams\" : {\n    \"numShards\" : 1,\n    \"replicationFactor\" : 2\n  },\n  \"type\" : \"DATA\",\n  \"metadata\" : { }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/collections",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"collections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check Typeahead Collection",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\" : \"{{app}}-typeahead\",\n  \"searchClusterId\" : \"default\",\n  \"commitWithin\" : 10000,\n  \"solrParams\" : {\n    \"numShards\" : 1,\n    \"replicationFactor\" : 2\n  },\n  \"type\" : \"DATA\",\n  \"metadata\" : { }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/apps/{{app}}/collections",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"apps",
+								"{{app}}",
+								"collections"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update  Managed Schema for Typeahead -- add fieldtypes and fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"add-field-type\": {\n    \"name\": \"edge_ngram\",\n    \"stored\": \"false\",\n    \"class\": \"solr.TextField\",\n    \"positionIncrementGap\": \"100\",\n    \"indexAnalyzer\": {\n      \"tokenizer\": {\n        \"class\": \"solr.StandardTokenizerFactory\"\n      },\n      \"filters\": [\n        {\n          \"class\": \"solr.LowerCaseFilterFactory\"\n        },\n        {\n          \"class\": \"solr.EdgeNGramFilterFactory\",\n          \"maxGramSize\": \"20\",\n          \"minGramSize\": \"2\"\n        }\n      ]\n    },\n    \"queryAnalyzer\": {\n      \"tokenizer\": {\n        \"class\": \"solr.KeywordTokenizerFactory\"\n      },\n      \"filters\": [\n        {\n          \"class\": \"solr.LowerCaseFilterFactory\"\n        }\n      ]\n    }\n  },\n\n  \"add-field-type\": {\n  \"name\": \"edge_ngram_query\",\n  \"class\": \"solr.TextField\",\n  \"positionIncrementGap\": \"100\",\n  \"indexAnalyzer\": {\n    \"tokenizer\": {\n      \"class\": \"solr.StandardTokenizerFactory\"\n    },\n    \"filters\": [\n      {\n        \"class\": \"solr.LowerCaseFilterFactory\"\n      },\n      {\n        \"class\": \"solr.EdgeNGramFilterFactory\",\n        \"maxGramSize\": \"20\",\n        \"minGramSize\": \"1\"\n      }\n    ]\n  },\n  \"queryAnalyzer\": {\n    \"tokenizer\": {\n      \"class\": \"solr.StandardTokenizerFactory\"\n    },\n    \"filters\": [\n      {\n        \"class\": \"solr.LowerCaseFilterFactory\"\n      },\n      {\n        \"class\": \"solr.EdgeNGramFilterFactory\",\n        \"maxGramSize\": \"20\",\n        \"minGramSize\": \"1\"\n      }\n    ]\n  }\n},\n\n\"add-field-type\": {\n  \"name\": \"ngram\",\n  \"class\": \"solr.TextField\",\n  \"positionIncrementGap\": \"100\",\n  \"indexAnalyzer\": {\n    \"tokenizer\": {\n      \"class\": \"solr.NGramTokenizerFactory\",\n      \"maxGramSize\": \"20\",\n      \"minGramSize\": \"2\"\n    },\n    \"filters\": [\n      {\n        \"class\": \"solr.LowerCaseFilterFactory\"\n      }\n    ]\n  },\n  \"queryAnalyzer\": {\n    \"tokenizer\": {\n      \"class\": \"solr.KeywordTokenizerFactory\"\n    },\n    \"filters\": [\n      {\n        \"class\": \"solr.LowerCaseFilterFactory\"\n      }\n    ]\n  }\n},\n\n\"add-field-type\": {\n  \"name\": \"ngram_query\",\n  \"stored\": \"false\",\n  \"class\": \"solr.TextField\",\n  \"positionIncrementGap\": \"100\",\n  \"indexAnalyzer\": {\n    \"tokenizer\": {\n      \"class\": \"solr.NGramTokenizerFactory\",\n      \"maxGramSize\": \"20\",\n      \"minGramSize\": \"2\"\n    },\n    \"filters\": [\n      {\n        \"class\": \"solr.LowerCaseFilterFactory\"\n      }\n    ]\n  },\n  \"queryAnalyzer\": {\n    \"tokenizer\": {\n      \"class\": \"solr.NGramTokenizerFactory\",\n      \"maxGramSize\": \"20\",\n      \"minGramSize\": \"2\"\n    },\n    \"filters\": [\n      {\n        \"class\": \"solr.LowerCaseFilterFactory\"\n      }\n    ]\n  }\n},\n\n\"add-field-type\": {\n  \"name\": \"string_sort\",\n  \"omitNorms\": \"true\",\n  \"sortMissingLast\": \"true\",\n  \"class\": \"solr.TextField\",\n  \"positionIncrementGap\": \"100\",\n  \"analyzer\": {\n    \"tokenizer\": {\n      \"class\": \"solr.KeywordTokenizerFactory\"\n    },\n    \"filters\": [\n      {\n        \"class\": \"solr.LowerCaseFilterFactory\"\n      },\n      {\n        \"class\": \"solr.TrimFilterFactory\"\n      },\n      {\n        \"class\": \"solr.PatternReplaceFilterFactory\",\n        \"replacement\": \"\",\n        \"replace\": \"all\",\n        \"pattern\": \"([^a-z])\"\n      }\n    ]\n  }\n},\n\n\"add-field-type\": {\n  \"name\": \"text_no_vowels\",\n  \"class\": \"solr.TextField\",\n  \"positionIncrementGap\": \"100\",\n  \"analyzer\": {\n    \"tokenizer\": {\n      \"class\": \"solr.StandardTokenizerFactory\"\n    },\n    \"filters\": [\n      {\n        \"class\": \"solr.StopFilterFactory\",\n        \"ignoreCase\": \"true\",\n        \"words\": \"stopwords.txt\"\n      },\n      {\n        \"class\": \"solr.LowerCaseFilterFactory\"\n      },\n      {\n        \"class\": \"solr.PatternReplaceFilterFactory\",\n        \"replacement\": \"\",\n        \"replace\": \"all\",\n        \"pattern\": \"([aeiouy])\"\n      },\n      {\n        \"class\": \"solr.LengthFilterFactory\",\n        \"max\": \"7\",\n        \"min\": \"1\"\n      }\n    ]\n  }\n},\n\n  \"add-field\" : {\n    \"name\":\"spell\",\n    \"type\":\"text_general\",\n    \"stored\": \"false\"},\n  \"add-field\" : {\n    \"name\":\"name_contains\",\n    \"type\":\"ngram\"},\n  \"add-field\" : {\n    \"name\":\"name_edge\",\n    \"type\":\"edge_ngram\"},\n  \"add-field\" : {\n    \"name\":\"name_en\",\n    \"type\":\"text_en\"},\n  \"add-field\" : {\n    \"name\":\"name\",\n    \"type\":\"text_general\"},\n  \"add-field\" : {\n    \"name\":\"name_no_vowels\",\n    \"type\":\"text_no_vowels\"},\n  \"add-field\" : {\n    \"name\":\"name_phonetic_en\",\n    \"type\":\"phonetic_en\"},\n  \"add-field\" : {\n    \"name\":\"name_sort\",\n    \"type\":\"string_sort\",\n    \"stored\": \"false\"},\n  \"add-field\" : {\n    \"name\":\"type\",\n    \"type\":\"string\"},\n  \"add-field\" : {\n    \"name\":\"synonyms\",\n    \"type\":\"text_general\",\n    \"multiValued\":\"true\"},\n\n\"add-copy-field\":{\n   \"source\":\"name\",\n   \"dest\":[\n     \"name_edge\",\n     \"name_contains\",\n     \"name_no_vowels\",\n     \"name_phonetic_en\",\n     \"name_en\",\n     \"name_sort\",\n     \"spell\"]}\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{furl}}/api/solr/typeahead/schema?reload=true",
+							"host": [
+								"{{furl}}"
+							],
+							"path": [
+								"api",
+								"solr",
+								"typeahead",
+								"schema"
+							],
+							"query": [
+								{
+									"key": "reload",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{pass}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{user}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "furl",
+			"value": "http://newmac:8764"
+		},
+		{
+			"key": "app",
+			"value": "test"
+		},
+		{
+			"key": "coll",
+			"value": "test"
+		},
+		{
+			"key": "idxp",
+			"value": "test"
+		},
+		{
+			"key": "qryp",
+			"value": "test"
+		}
+	]
+}
