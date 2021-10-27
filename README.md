@@ -11,3 +11,16 @@ Note: there is also an example of visualization and the template engine:
 https://learning.postman.com/docs/sending-requests/visualizer/
 
 Check the `Visualization` folder, and the `Datasource Jobs statuses with visualization` sample request which renders an HTML table out of the JSON response of datasource job statuses.
+
+
+See variables documentation: https://learning.postman.com/docs/sending-requests/variables/
+
+This collection uses these (opinionated) variables:
+
+| Variable Name  | Example value        | Note |
+| ------------- | ------------- | -------- }
+| furl  | http://localhost:8764  | leave trailing slash off for better readability in the postman request line |
+| app  |  application name |  |
+| coll  | collection name  |  |
+| user  | username  |  |
+| pass  |  password |  |
